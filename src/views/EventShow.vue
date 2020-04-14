@@ -1,13 +1,15 @@
 <template>
-  <h1>Show event #1</h1>
+  <h1>Show event {{ id }}</h1>
 </template>
 
 <script>
 export default {
-
+  props: {
+    id: {
+      type: Number
+    }
+  }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
