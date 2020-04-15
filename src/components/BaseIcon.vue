@@ -3,6 +3,7 @@
     <svg class="icon" :width="width" :height="heigth">
       <use v-bind="{ 'xlink:href': '/acid.svg#' + name }" />
     </svg>
+    <slot></slot>
   </div>
 </template>
 
