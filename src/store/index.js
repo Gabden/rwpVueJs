@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import EventService from '@/services/EventService.js'
 
 Vue.use(Vuex)
 
@@ -20,8 +21,35 @@ export default new Vuex.Store({
     ],
     events: [{ id: 1, name: 'Portvain' }]
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    ADD_EVENT({ state }, event) {
+      state.events.push(event)
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
+    }
+  },
+  actions: {
+    CREATE_EVENT({ commit }, event) {
+      return EventService.postEvent(event)
+        .then(() => {
+          commit('ADD_EVENT', event)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    FETCH_EVENTS({ commit }) {
+      EventService.getEvents()
+        .then(response => {
+          commit('SET_EVENTS', response.data)
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
   modules: {},
   getters: {
     catLength: state => {
