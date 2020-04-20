@@ -265,4 +265,15 @@ select::ms-expand {
 .slide-fade-leave-active {
   transition: all 0.5s ease-out;
 }
+
+.slide-up-enter {
+  transform: translateY(10px);
+  opacity: 0;
+}
+.slide-up-enter-active {
+  transition: all 0.5s ease-out;
+}
+.slide-up-move {
+  transition: transform 0.5s ease-out;
+}
 </style>
