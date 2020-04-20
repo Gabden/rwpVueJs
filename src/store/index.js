@@ -19,7 +19,9 @@ export default new Vuex.Store({
       'food',
       'community'
     ],
-    events: [{ id: 1, name: 'Portvain' }]
+    events: [{ id: 1, name: 'Portvain' }],
+    event: {},
+    totalEvents: 0
   },
   mutations: {
     ADD_EVENT({ state }, event) {
@@ -27,6 +29,12 @@ export default new Vuex.Store({
     },
     SET_EVENTS(state, events) {
       state.events = events
+    },
+    UPDATE_TOTAL_PAGES(state, total) {
+      state.totalEvents = total
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   actions: {
@@ -39,15 +47,31 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    FETCH_EVENTS({ commit }) {
-      EventService.getEvents()
+    FETCH_EVENTS({ commit }, { perPage, page }) {
+      EventService.getEvents(perPage, page)
         .then(response => {
+          console.log(response.headers['x-total-count'])
+          let totalEvents = parseInt(response.headers['x-total-count'])
+          commit('UPDATE_TOTAL_PAGES', totalEvents)
           commit('SET_EVENTS', response.data)
-          console.log(response)
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    FETCH_EVENT({ commit, getters }, id) {
+      let event = getters.getEventById(id)
+      if (event) {
+        commit('SET_EVENT', event)
+      } else {
+        EventService.getEvent(id)
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
   },
   modules: {},

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import EventCreate from '../views/EventCreate.vue'
 import EventList from '../views/EventList.vue'
 import EventShow from '../views/EventShow.vue'
+import Animations from '../views/Animations.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/event/create',
     name: 'event-create',
     component: EventCreate
+  },
+  {
+    path: '/animation',
+    name: 'animation',
+    component: Animations
   }
 ]
 
